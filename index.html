@@ -1,0 +1,157 @@
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<title>TicTacToe</title>
+		<style type="text/css">
+      *{
+				padding: 0;
+				margin:0;
+				box-sizing: border-box;
+		}
+    .con{
+  	max-width:500px;
+  	height: 500px;
+  	margin: auto;  
+  	transform: translateY(18%);
+  }
+  .flex{
+  	display: flex;
+  	justify-content: space-between;
+  	margin: 20px;
+  }
+  .header{
+  	 color: tomato;
+  }
+  .p1, .p2 {
+    font-family: 'IBM Plex Sans Condensed', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+  }
+  
+  .p1 {
+    color: tomato;
+    margin-left: 20px;
+  }
+  
+  .p2 {
+    color: #33DBFF;
+    margin-right: 20px;
+  }
+  .grid{
+  	display: grid;
+  	grid-template-columns: 1fr 1fr 1fr;
+  }
+  .space{
+  	min-width: 50px;
+      height: 100px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition:background-color .5s;
+      text-align: center;
+      position: relative;
+  
+  }
+  .space:hover{
+  	background-color:#eeeeeea1;
+  	cursor: pointer;
+  }
+  .btn{
+  	    transform: translateX(-45%);
+      width: 100px;
+      height: 30px;
+      position: absolute;
+      left: 50%;
+  }
+  .x, .o {
+       font-family: 'arial';
+      text-align: center;
+      font-size: 70px;
+      position: absolute;
+      left: 30px;
+      transform: translate(100%, 0%);
+  }
+  
+  .x {
+    color: tomato;
+  }
+  
+  .o {
+    color: #33DBFF;
+  }
+}
+		</style>
+	</head>
+	<body>
+    <div class="con">
+			<div class="flex">
+					<div class="player1"><p class="p1">player1</p></div>
+					 <h1 class='header'>Tic Tac Toe</h1>
+					<div class="player2"><p class="p2">player2</p></div>
+		   </div>
+		   <div class="grid">
+			 	 <div class='space' id='1'></div>
+				 <div class='space' id='2'></div>
+				 <div class='space' id='3'></div>
+				 <div class='space' id='4'></div>
+				 <div class='space' id='5'></div>
+				 <div class='space' id='6'></div>
+				 <div class='space' id='7'></div>
+				 <div class='space' id='8'></div>
+				 <div class='space' id='9'></div>
+			</div>
+		</div> 
+
+		<div class='wrapper'>
+		  <button class='btn'>Reset</button>
+		</div>
+		</div>
+		<script type="text/javascript">
+      		//تمت تعريف المتغيرات الاساسية في البرنامج
+      			let btn=document.querySelector(".btn");
+      			let space=document.querySelectorAll(".space");
+      			let win=[[0,1,2],[3,4,5],[6,7,8],[0,4,8],[2,4,6],[0,3,6],[1,4,7],[2,5,8]]//مصفوفة الفوز
+      		  let state=Array(9).fill("");//مصفوفة فارغة لتنزيل اللاعب فيها و فحص الفوز منها
+      //دالة بداية اللعب
+      function game(){
+         let player = "x";
+         for (let item of space) {
+            item.onclick = function() {
+               let index = parseInt(this.getAttribute("id"))-1;
+               if (this.innerHTML == "") {
+                 state[index] = player;
+                 this.innerHTML = `<p class=${player}>${player}</p>`;
+                 setTimeout(function(){console.log('kkk'); 
+                	checker(player)
+                  player = player === "x" ? "o" : "x";},500)
+              
+                  }
+            }
+         }
+      }
+      
+      function checker(player){
+      			for(pattern of win){
+      				if(pattern.every(index =>state[index] === player)){
+      					for (let cell of space) {
+                      cell.onclick = null;
+      
+                  }
+      					return alert(`${player} win `);
+      				}
+      			}
+      				if(state.every(cell => cell !=="")){	
+      					return alert(`draw`);
+      				}
+      			return false
+      		}
+    btn.onclick = function(){
+      				for (let i =0; i<state.length;i++) {
+         					state[i] = "";}
+              for (let cell of space) {
+                  cell.innerHTML = "";}
+                  game();}
+     
+      game();
+    </script>
+</body>
+</html>	
